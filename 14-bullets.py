@@ -58,12 +58,14 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__()
         self.speed = 5
         if type == "snail":
+            self.animation_speed = 0.05
             self.frames = [
                 pygame.image.load("images/snail.png").convert_alpha(),
                 pygame.image.load("images/snail_2.png").convert_alpha()
             ]
             self.y_pos = 300
         elif type == "fly":
+            self.animation_speed = 0.1
             self.frames = [
                 pygame.image.load("images/fly_2.png").convert_alpha(),
                 pygame.image.load("images/fly_3.png").convert_alpha()
@@ -75,7 +77,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(midbottom=(800, self.y_pos))
 
     def apply_animation(self):
-        self.frame_index += 0.05
+        self.frame_index += self.animation_speed
         if self.frame_index >= len(self.frames):
             self.frame_index = 0
         self.image = self.frames[int(self.frame_index)]
@@ -100,7 +102,8 @@ class Bullet(pygame.sprite.Sprite):
 
     def apply_movement(self):
         self.rect.x += self.speed
-
+        if self.rect.right <= 0:
+            self.kill()
     def update(self):
         self.apply_movement()
 
