@@ -65,7 +65,7 @@ class Enemy(pygame.sprite.Sprite):
             ]
             self.y_pos = 300
         elif type == "fly":
-            self.animation_speed = 0.1
+            self.animation_speed = 0.5
             self.frames = [
                 pygame.image.load("images/fly_2.png").convert_alpha(),
                 pygame.image.load("images/fly_3.png").convert_alpha()
