@@ -263,7 +263,6 @@ while True:
         # Fill the screen with black
         screen.fill((0, 0, 0))
 
-        print(len(BulletGroup))
         # Draw the Sprite
         BackgroundGroup.draw(screen)
         CloudGroup.draw(screen)
@@ -292,6 +291,7 @@ while True:
         PlayerGroup.empty()
         PlayerGroup.add(Player())
         CloudGroup.empty()
+        BulletGroup.empty()
 
         # Fill the screen with white
         screen.fill((255, 255, 255))

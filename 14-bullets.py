@@ -287,6 +287,7 @@ while True:
         PlayerGroup.empty()
         PlayerGroup.add(Player())
         CloudGroup.empty()
+        BulletGroup.empty()
 
         # Fill the screen with white
         screen.fill((255, 255, 255))
