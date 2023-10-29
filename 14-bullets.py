@@ -8,6 +8,7 @@ from sys import exit
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
+        self.bullets = 20
         self.gravity = 0
         self.initial_position = (80, 300)
         self.frame_index = 0
@@ -147,6 +148,11 @@ def display_score():
     # Return the current time to be used for updating the score
     return current_time
 
+def display_bullets():
+    number_of_bullets = PlayerGroup.sprite.bullets
+    bullet_surface = small_font.render(f"Bullets: {number_of_bullets}", False, "Black")
+    bullet_rect = bullet_surface.get_rect(center=(400, 100))
+    screen.blit(bullet_surface, bullet_rect)
 
 def check_collision():
     global game_active
@@ -231,7 +237,14 @@ while True:
             if event.type == enemy_timer:
                 EnemyGroup.add(Enemy(random.choice(["snail", "fly"])))
             if event.type==pygame.MOUSEBUTTONDOWN:
-                BulletGroup.add(Bullet())
+                if PlayerGroup.sprite.bullets > 0 :
+                    BulletGroup.add(Bullet())
+                    PlayerGroup.sprite.bullets -= 1
+            if event.type==pygame.KEYDOWN:
+                if event.key==pygame.K_x:
+                    if PlayerGroup.sprite.bullets > 0 :
+                        BulletGroup.add(Bullet())
+                        PlayerGroup.sprite.bullets -= 1
         # Handle events if the game is not active
         else:
             # Restart the game if space is pressed
@@ -242,8 +255,6 @@ while True:
         # Fill the screen with black
         screen.fill((0, 0, 0))
 
-        # Display the score
-        score = display_score()
 
         # Draw the Sprite
         BackgroundGroup.draw(screen)
@@ -252,6 +263,10 @@ while True:
         PlayerGroup.draw(screen)
         EnemyGroup.draw(screen)
         BulletGroup.draw(screen)
+
+        # Display the score
+        score = display_score()
+        display_bullets()
 
         # Update the Sprite Groups
         CloudGroup.update()
